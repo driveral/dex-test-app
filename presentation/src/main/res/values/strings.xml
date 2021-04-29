@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">DEXTestApp</string>
+    <string name="error_invalid_credentials">Invalid credentials.</string>
+    <string name="error_no_credentials">No credentials available.</string>
+    <string name="welcome_message_splash">Welcome</string>
+    <string name="login_username_hint">username (admin)</string>
+    <string name="login_password_hint">password (admin)</string>
+    <string name="login_login_button">login</string>
+</resources>

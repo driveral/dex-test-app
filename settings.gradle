@@ -1,0 +1,6 @@
+include ':interactor'
+include ':framework'
+include ':data'
+include ':domain'
+include ':presentation'
+rootProject.name = "DEXTestApp"
