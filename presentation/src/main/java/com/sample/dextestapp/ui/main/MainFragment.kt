@@ -12,13 +12,14 @@ import androidx.navigation.fragment.findNavController
 import com.sample.dextestapp.R
 import com.sample.dextestapp.databinding.MainFragmentBinding
 import com.sample.dextestapp.databinding.PostListItemBinding
+import com.sample.dextestapp.ui.common.BaseFragment
 import com.sample.domain.Post
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "MainFragment"
 
 @AndroidEntryPoint
-class MainFragment : Fragment() {
+class MainFragment : BaseFragment() {
 
     companion object {
         fun newInstance() = MainFragment()

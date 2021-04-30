@@ -5,18 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.sample.dextestapp.R
 import com.sample.dextestapp.databinding.PostDetailFragmentBinding
-import com.squareup.picasso.Callback
+import com.sample.dextestapp.ui.common.BaseFragment
 import com.squareup.picasso.Picasso
 
 private const val TAG = "PostDetailFragment"
 
-class PostDetailFragment : Fragment() {
+class PostDetailFragment : BaseFragment() {
 
     companion object {
         fun newInstance() = PostDetailFragment()
@@ -44,7 +43,7 @@ class PostDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        postponeEnterTransition()
+
         val post = args.post
 
         // Set transition names for shared element transition
@@ -53,15 +52,10 @@ class PostDetailFragment : Fragment() {
 
 
         binding.post = post
-        Picasso.get().load(post.imageUrl).into(binding.image, object : Callback {
-            override fun onSuccess() {
-                startPostponedEnterTransition()
-            }
-
-            override fun onError(e: Exception?) {
-                startPostponedEnterTransition()
-            }
-        })
+        Picasso.get()
+            .load(post.imageUrl)
+            .error(R.drawable.ic_outline_broken_image_24)
+            .into(binding.image)
     }
 
 }

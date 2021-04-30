@@ -58,6 +58,9 @@ class PostViewHolder(
         binding.caption.transitionName = "caption_${post.postId}"
 
         binding.post = post
-        Picasso.get().load(post.imageUrl).into(binding.image)
+        Picasso.get()
+            .load(post.imageUrl)
+            .error(R.drawable.ic_outline_broken_image_24)
+            .into(binding.image)
     }
 }

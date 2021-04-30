@@ -9,10 +9,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.sample.dextestapp.R
 import com.sample.dextestapp.databinding.LoginFragmentBinding
+import com.sample.dextestapp.ui.common.BaseFragment
 import com.sample.domain.ErrorEntity
 import com.sample.domain.ErrorEntity.NO_CREDENTIALS_AVAILABLE
 import com.sample.domain.ErrorEntity.WRONG_CREDENTIALS
@@ -21,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 private const val TAG = "LoginFragment"
 
 @AndroidEntryPoint
-class LoginFragment : Fragment() {
+class LoginFragment : BaseFragment() {
 
     lateinit var binding: LoginFragmentBinding
 
