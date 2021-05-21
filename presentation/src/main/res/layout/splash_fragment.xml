@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/motionLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layoutDescription="@xml/scene_01"
-    tools:showPaths="true">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/welcome_message_splash" />
+    <data>
 
-    <com.sample.dextestapp.view.CustomImageFilterView
-        android:id="@+id/image"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:src="@drawable/ic_baseline_sync_24"
-        app:altSrc="@drawable/ic_baseline_android_24"
-        app:overlay="false" />
+    </data>
 
-</androidx.constraintlayout.motion.widget.MotionLayout>
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/motionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/scene_01"
+        tools:showPaths="true">
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome_message_splash" />
+
+        <com.sample.dextestapp.view.CustomImageFilterView
+            android:id="@+id/image"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_baseline_sync_24"
+            app:altSrc="@drawable/ic_baseline_android_24"
+            app:overlay="false" />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+</layout>
