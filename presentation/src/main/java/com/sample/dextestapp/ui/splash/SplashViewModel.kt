@@ -22,11 +22,11 @@ class SplashViewModel @Inject constructor(
     val navigateToContentEvent: LiveData<Unit> = _navigateToContentEvent
 
     init {
-        //checkIfUserIsLoggedIn()
+        checkIfUserIsLoggedIn()
     }
 
 
-    fun checkIfUserIsLoggedIn() {
+    private fun checkIfUserIsLoggedIn() {
         viewModelScope.launch {
             if (isUserLoggedInInteractor.isUserLoggedIn()) {
                 _navigateToContentEvent.call()
