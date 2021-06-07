@@ -39,7 +39,6 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.core:core-ktx:$core_ktx_version"
