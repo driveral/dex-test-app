@@ -3,8 +3,9 @@ package com.sample.interactor
 import com.sample.data.CredentialsRepository
 import com.sample.data.UserRepository
 import com.sample.domain.Result
+import javax.inject.Inject
 
-class LoginInteractor(
+class LoginInteractor @Inject constructor(
     private val userRepository: UserRepository,
     private val credentialsRepository: CredentialsRepository
 ) {

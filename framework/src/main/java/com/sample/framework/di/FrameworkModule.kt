@@ -1,4 +1,4 @@
-package com.sample.dextestapp.di
+package com.sample.framework.di
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -24,8 +24,8 @@ class FrameworkModule {
     fun provideSecurePreferences(
         @ApplicationContext context: Context
     ): SharedPreferences {
-        val sharedPrefsFile: String = "Secure_preferences"
-        val mainKeyAlias: String = "cred_key"
+        val sharedPrefsFile = "Secure_preferences"
+        val mainKeyAlias = "cred_key"
 
         return EncryptedSharedPreferences.create(
             sharedPrefsFile,
@@ -34,25 +34,6 @@ class FrameworkModule {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-    }
-
-    @Provides
-    fun provideCredentialsDataSourceImpl(
-        sharedPreferences: SharedPreferences
-    ): CredentialsDataSourceImpl {
-        return CredentialsDataSourceImpl(sharedPreferences)
-    }
-
-    @Provides
-    fun providePostsDataSourceImpl(
-    ): PostDataSourceImpl {
-        return PostDataSourceImpl()
-    }
-
-    @Provides
-    fun provideUserDataSourceImpl(
-    ): UserDataSourceImpl {
-        return UserDataSourceImpl()
     }
 }
 

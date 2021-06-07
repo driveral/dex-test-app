@@ -11,7 +11,7 @@ import androidx.transition.TransitionInflater
 import com.sample.dextestapp.R
 import com.sample.dextestapp.databinding.PostDetailFragmentBinding
 import com.sample.dextestapp.ui.common.BaseFragment
-import com.squareup.picasso.Picasso
+import com.sample.dextestapp.util.loadImage
 
 private const val TAG = "PostDetailFragment"
 
@@ -50,12 +50,8 @@ class PostDetailFragment : BaseFragment() {
         binding.image.transitionName = "image_${post.postId}"
         binding.caption.transitionName = "caption_${post.postId}"
 
-
         binding.post = post
-        Picasso.get()
-            .load(post.imageUrl)
-            .error(R.drawable.ic_outline_broken_image_24)
-            .into(binding.image)
+        binding.image.loadImage(post.imageUrl)
     }
 
 }

@@ -1,6 +1,6 @@
-include ':interactor'
+rootProject.name = "DEXTestApp"
+include ':presentation'
 include ':framework'
+include ':interactor'
 include ':data'
 include ':domain'
-include ':presentation'
-rootProject.name = "DEXTestApp"

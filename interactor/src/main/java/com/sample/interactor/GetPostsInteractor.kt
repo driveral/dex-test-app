@@ -4,8 +4,9 @@ import com.sample.data.CredentialsRepository
 import com.sample.data.PostRepository
 import com.sample.domain.Post
 import com.sample.domain.Result
+import javax.inject.Inject
 
-class GetPostsInteractor(
+class GetPostsInteractor @Inject constructor(
     private val credentialsRepository: CredentialsRepository,
     private val postRepository: PostRepository
 ) {

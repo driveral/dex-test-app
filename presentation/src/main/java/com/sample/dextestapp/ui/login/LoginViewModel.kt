@@ -4,14 +4,13 @@ import androidx.lifecycle.*
 import com.sample.dextestapp.util.SingleLiveEvent
 import com.sample.domain.ErrorEntity
 import com.sample.domain.Result
-import com.sample.interactor.LoginInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginInteractor: LoginInteractor
+    private val loginInteractor: com.sample.interactor.LoginInteractor
 ) : ViewModel() {
 
     private val _loginSuccessFulEvent: SingleLiveEvent<Unit> = SingleLiveEvent()

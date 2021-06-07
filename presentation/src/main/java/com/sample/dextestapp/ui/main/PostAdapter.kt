@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sample.dextestapp.R
 import com.sample.dextestapp.databinding.PostListItemBinding
+import com.sample.dextestapp.util.loadImage
 import com.sample.domain.Post
-import com.squareup.picasso.Picasso
 
 private const val TAG = "PostAdapter"
 
@@ -58,9 +58,6 @@ class PostViewHolder(
         binding.caption.transitionName = "caption_${post.postId}"
 
         binding.post = post
-        Picasso.get()
-            .load(post.imageUrl)
-            .error(R.drawable.ic_outline_broken_image_24)
-            .into(binding.image)
+        binding.image.loadImage(post.imageUrl)
     }
 }

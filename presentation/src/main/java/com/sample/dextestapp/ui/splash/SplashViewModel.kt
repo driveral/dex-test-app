@@ -6,13 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.sample.dextestapp.util.SingleLiveEvent
 import com.sample.interactor.IsUserLoggedInInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val isUserLoggedInInteractor: com.sample.interactor.IsUserLoggedInInteractor
+    private val isUserLoggedInInteractor: IsUserLoggedInInteractor
 ) : ViewModel() {
 
     private val _navigateToLoginEvent: SingleLiveEvent<Unit> = SingleLiveEvent()
