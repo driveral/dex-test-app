@@ -8,23 +8,22 @@ import javax.inject.Inject
 
 const val USER_KEY = "USER_KEY"
 const val TOKEN_KEY = "TOKEN_KEY"
-const val INVALID_USER_ID: Long = -1000
 
 class CredentialsDataSourceImpl @Inject constructor(private val sharedPreferences: SharedPreferences) :
     com.sample.data.CredentialsDataSource {
 
     override suspend fun saveCredentials(credentials: Credentials) {
         sharedPreferences.edit {
-            putLong(USER_KEY, credentials.userId)
+            putString(USER_KEY, credentials.userId)
             putString(TOKEN_KEY, credentials.token)
         }
     }
 
     override fun getCredentials(): Result<Credentials> {
-        val userId = sharedPreferences.getLong(USER_KEY, INVALID_USER_ID)
+        val userId = sharedPreferences.getString(USER_KEY, null)
         val token = sharedPreferences.getString(TOKEN_KEY, null)
 
-        if (userId != INVALID_USER_ID && token != null) {
+        if (userId != null && token != null) {
             return Result.Success(Credentials(userId, token))
         }
 

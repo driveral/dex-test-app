@@ -1,5 +1,6 @@
 package com.sample.dextestapp.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -63,6 +64,12 @@ class LoadingMaterialButton @JvmOverloads constructor(
     fun setText(text: String?) {
         buttonText = text
         materialButton.text = text
+    }
+
+    // The button is the view that performs the action so pass the click to it.
+    @SuppressLint("ClickableViewAccessibility")
+    override fun performClick(): Boolean {
+        return materialButton.performClick()
     }
 
     override fun setOnClickListener(l: OnClickListener?) {

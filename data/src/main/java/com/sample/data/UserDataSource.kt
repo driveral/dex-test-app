@@ -7,5 +7,6 @@ interface UserDataSource {
     suspend fun login(userName: String, password: String): Result<Credentials>
     suspend fun logout()
     suspend fun areCredentialsValid(credentials: Credentials): Boolean
+    suspend fun register(userName: String, password: String): Result<Unit>
 }
 

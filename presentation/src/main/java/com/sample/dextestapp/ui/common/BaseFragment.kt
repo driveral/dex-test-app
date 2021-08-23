@@ -13,6 +13,6 @@ open class BaseFragment : Fragment(){
             .setExitAnim(R.anim.exit_to_top)
             .setPopUpTo(R.id.splashFragment, true)
             .build()
-        findNavController().navigate(R.id.loginFragment, null, navOptions)
+        findNavController().navigate(R.id.login_graph, null, navOptions)
     }
 }

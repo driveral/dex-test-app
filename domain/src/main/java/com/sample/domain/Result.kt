@@ -7,5 +7,6 @@ sealed class Result<T> {
 
 enum class ErrorEntity{
     WRONG_CREDENTIALS,
-    NO_CREDENTIALS_AVAILABLE
+    NO_CREDENTIALS_AVAILABLE,
+    USERNAME_IN_USE,
 }

@@ -1,6 +1,5 @@
-package com.sample.dextestapp.ui.login
+package com.sample.dextestapp.ui.login.signin
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,10 +12,13 @@ import com.google.android.material.snackbar.Snackbar
 import com.sample.dextestapp.R
 import com.sample.dextestapp.databinding.LoginFragmentBinding
 import com.sample.dextestapp.ui.common.BaseFragment
-import com.sample.domain.ErrorEntity
-import com.sample.domain.ErrorEntity.NO_CREDENTIALS_AVAILABLE
-import com.sample.domain.ErrorEntity.WRONG_CREDENTIALS
+import com.sample.dextestapp.util.toLocalizedMessage
 import dagger.hilt.android.AndroidEntryPoint
+import android.view.inputmethod.EditorInfo
+
+import android.widget.TextView
+import android.widget.TextView.OnEditorActionListener
+
 
 private const val TAG = "LoginFragment"
 
@@ -47,6 +49,7 @@ class LoginFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        listenToImeActions()
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
@@ -56,6 +59,16 @@ class LoginFragment : BaseFragment() {
         viewModel.loginErrorMessage.observe(viewLifecycleOwner) { error ->
             onLoginFailed(error.toLocalizedMessage(requireContext()))
         }
+    }
+
+    private fun listenToImeActions(){
+        binding.inputPassword.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEND) {
+                binding.loginButton.performClick()
+                return@OnEditorActionListener true
+            }
+            false
+        })
     }
 
     private fun onLoginSuccessFul() {
@@ -71,11 +84,4 @@ class LoginFragment : BaseFragment() {
         Snackbar.make(binding.snackbarTarget, message, Snackbar.LENGTH_SHORT).show()
     }
 
-}
-
-private fun ErrorEntity.toLocalizedMessage(context: Context): String {
-    return when (this) {
-        WRONG_CREDENTIALS -> context.getString(R.string.error_invalid_credentials)
-        NO_CREDENTIALS_AVAILABLE -> context.getString(R.string.error_no_credentials)
-    }
 }

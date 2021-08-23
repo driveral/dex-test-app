@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         val appBarConfiguration =
-            AppBarConfiguration(setOf(R.id.splashFragment, R.id.mainFragment, R.id.loginFragment))
+            AppBarConfiguration(setOf(R.id.splashFragment, R.id.mainFragment, R.id.loginSelectFragment))
         findViewById<MaterialToolbar>(R.id.toolbar)
             .setupWithNavController(navController, appBarConfiguration)
     }

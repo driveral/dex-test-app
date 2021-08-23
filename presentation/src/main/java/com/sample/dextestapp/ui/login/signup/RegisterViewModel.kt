@@ -1,16 +1,17 @@
-package com.sample.dextestapp.ui.login
+package com.sample.dextestapp.ui.login.signup
 
 import androidx.lifecycle.*
 import com.sample.dextestapp.util.SingleLiveEvent
 import com.sample.domain.ErrorEntity
 import com.sample.domain.Result
+import com.sample.interactor.RegisterInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
-    private val loginInteractor: com.sample.interactor.LoginInteractor
+class RegisterViewModel @Inject constructor(
+    private val registerInteractor: RegisterInteractor
 ) : ViewModel() {
 
     private val _loginSuccessFulEvent: SingleLiveEvent<Unit> = SingleLiveEvent()
@@ -21,6 +22,7 @@ class LoginViewModel @Inject constructor(
 
     val username: MutableLiveData<String> = MutableLiveData("")
     val password: MutableLiveData<String> = MutableLiveData("")
+    val repeatPassword: MutableLiveData<String> = MutableLiveData("")
 
     private val _canLogin: MediatorLiveData<Boolean> = MediatorLiveData()
     val canLogin: LiveData<Boolean> = _canLogin
@@ -36,19 +38,28 @@ class LoginViewModel @Inject constructor(
         _canLogin.addSource(password) {
             _canLogin.value = canLogin()
         }
+        _canLogin.addSource(repeatPassword) {
+            _canLogin.value = canLogin()
+        }
         _canLogin.addSource(loading) {
             _canLogin.value = canLogin()
         }
     }
 
-    private fun canLogin(): Boolean =
-        !(loading.value
-            ?: false) and !username.value.isNullOrEmpty() and !password.value.isNullOrEmpty()
+    private fun canLogin(): Boolean {
+        if (loading.value == true) {
+            return false
+        }
+        return !username.value.isNullOrEmpty() and
+                !password.value.isNullOrEmpty() and
+                !repeatPassword.value.isNullOrEmpty() and
+                password.value.equals(repeatPassword.value)
+    }
 
-    fun login(user: String, pass: String) {
+    fun register(user: String, pass: String) {
         viewModelScope.launch {
             _loading.value = true
-            when (val result = loginInteractor.login(user, pass)) {
+            when (val result = registerInteractor.register(user, pass)) {
                 is Result.Failure -> _loginErrorMessage.value = result.error
                 is Result.Success -> _loginSuccessFulEvent.call()
             }

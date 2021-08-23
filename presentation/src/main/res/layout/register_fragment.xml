@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:animateLayoutChanges="true">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="viewModel"
-            type="com.sample.dextestapp.ui.login.signin.LoginViewModel" />
+            type="com.sample.dextestapp.ui.login.signup.RegisterViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.login.signin.LoginFragment">
+        tools:context=".ui.login.signup.RegisterFragment">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_username"
@@ -30,8 +28,8 @@
                 android:id="@+id/input_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
                 android:enabled="@{!viewModel.loading}"
+                android:inputType="text"
                 android:hint="@string/login_username_hint"
                 android:imeOptions="actionNext"
                 android:singleLine="true"
@@ -55,10 +53,33 @@
                 android:layout_height="wrap_content"
                 android:enabled="@{!viewModel.loading}"
                 android:hint="@string/login_password_hint"
-                android:imeOptions="actionSend"
+                android:imeOptions="actionNext"
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:text="@={viewModel.password}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_password_repeat"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/input_layout_password">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_password_repeat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="@{!viewModel.loading}"
+                android:hint="@string/register_password_repeat_hint"
+                android:imeOptions="actionSend"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:text="@={viewModel.repeatPassword}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -67,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/login_button"
-            app:layout_constraintTop_toBottomOf="@id/input_layout_password" />
+            app:layout_constraintTop_toBottomOf="@id/input_layout_password_repeat" />
 
         <com.sample.dextestapp.view.LoadingMaterialButton
             android:id="@+id/login_button"
@@ -76,11 +97,10 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:enabled='@{viewModel.canLogin}'
-            android:onClick="@{() -> viewModel.login(viewModel.username, viewModel.password)}"
+            android:onClick="@{() -> viewModel.register(viewModel.username, viewModel.password)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:loading="@{viewModel.loading}"
-            app:text="@string/login_login_button" />
-
+            app:text="@string/register_sign_up_button_text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

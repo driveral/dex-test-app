@@ -1,6 +1,6 @@
 package com.sample.domain
 
 class Credentials(
-    val userId: Long,
+    val userId: String,
     val token: String
 )
