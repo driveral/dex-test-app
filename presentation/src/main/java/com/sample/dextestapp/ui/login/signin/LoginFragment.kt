@@ -5,6 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView.OnEditorActionListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -14,10 +18,6 @@ import com.sample.dextestapp.databinding.LoginFragmentBinding
 import com.sample.dextestapp.ui.common.BaseFragment
 import com.sample.dextestapp.util.toLocalizedMessage
 import dagger.hilt.android.AndroidEntryPoint
-import android.view.inputmethod.EditorInfo
-
-import android.widget.TextView
-import android.widget.TextView.OnEditorActionListener
 
 
 private const val TAG = "LoginFragment"
