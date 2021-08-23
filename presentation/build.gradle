@@ -20,6 +20,13 @@ android {
     }
 
     buildTypes {
+        debugR8 {
+            initWith debug
+            matchingFallbacks = ['debug', 'release']
+
+            minifyEnabled true
+            shrinkResources true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
