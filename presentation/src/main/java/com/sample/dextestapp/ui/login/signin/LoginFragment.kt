@@ -25,7 +25,11 @@ private const val TAG = "LoginFragment"
 @AndroidEntryPoint
 class LoginFragment : BaseFragment() {
 
-    lateinit var binding: LoginFragmentBinding
+    private var _binding: LoginFragmentBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     companion object {
         fun newInstance() = LoginFragment()
@@ -37,7 +41,7 @@ class LoginFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(
+        _binding = DataBindingUtil.inflate(
             inflater,
             R.layout.login_fragment,
             container,
@@ -61,8 +65,23 @@ class LoginFragment : BaseFragment() {
         }
     }
 
-    private fun listenToImeActions(){
-        binding.inputPassword.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+        val navController = findNavController()
+        // If opening the main content set the correct animation programmatically or the exiting
+        // fragment will slide to the left. This issue seems to be related to exiting a nested graph.
+        if (!enter && navController.currentDestination?.id == R.id.mainFragment) {
+            return AnimationUtils.loadAnimation(requireContext(), R.anim.exit_to_bottom)
+        }
+        return super.onCreateAnimation(transit, enter, nextAnim)
+    }
+
+    private fun listenToImeActions() {
+        binding.inputPassword.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEND) {
                 binding.loginButton.performClick()
                 return@OnEditorActionListener true

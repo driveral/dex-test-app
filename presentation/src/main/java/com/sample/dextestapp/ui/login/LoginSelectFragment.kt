@@ -18,13 +18,16 @@ class LoginSelectFragment : Fragment() {
     }
 
     val viewModel: LoginSelectViewModel by viewModels()
-    lateinit var binding: LoginSelectFragmentBinding
+    private var _binding: LoginSelectFragmentBinding? = null
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding =
+        _binding =
             DataBindingUtil.inflate(inflater, R.layout.login_select_fragment, container, false)
         return binding.root
     }
@@ -36,6 +39,11 @@ class LoginSelectFragment : Fragment() {
             loginButton.setOnClickListener{navigateToLogin()}
             registerButton.setOnClickListener{navigateToRegister()}
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun navigateToLogin(){

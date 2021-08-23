@@ -24,13 +24,17 @@ class SplashFragment : BaseFragment() {
     }
 
     private val viewModel: SplashViewModel by viewModels()
-    private lateinit var binding: SplashFragmentBinding
+    private var _binding: SplashFragmentBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.splash_fragment, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.splash_fragment, container, false)
         return binding.root
     }
 
@@ -38,6 +42,11 @@ class SplashFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         subscribeToViewModelEvents()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun subscribeToViewModelEvents() {

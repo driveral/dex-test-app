@@ -28,13 +28,17 @@ class RegisterFragment : Fragment() {
     }
 
     private val viewModel: RegisterViewModel by viewModels()
-    lateinit var binding: RegisterFragmentBinding
+    private var _binding: RegisterFragmentBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.register_fragment, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.register_fragment, container, false)
         return binding.root
     }
 
@@ -47,6 +51,21 @@ class RegisterFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         viewModel.loginSuccessFulEvent.observe(viewLifecycleOwner) { onRegisterSuccessful() }
         viewModel.loginErrorMessage.observe(viewLifecycleOwner) { onRegisterFailed(it) }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun listenToImeActions() {
+        binding.inputPasswordRepeat.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEND) {
+                binding.loginButton.performClick()
+                return@OnEditorActionListener true
+            }
+            false
+        })
     }
 
     private fun onRegisterSuccessful() {

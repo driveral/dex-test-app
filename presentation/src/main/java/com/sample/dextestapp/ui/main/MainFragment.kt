@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -25,7 +24,11 @@ class MainFragment : BaseFragment() {
         fun newInstance() = MainFragment()
     }
 
-    lateinit var binding: MainFragmentBinding
+    private var _binding: MainFragmentBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     private val viewModel: MainViewModel by viewModels()
 
@@ -33,7 +36,7 @@ class MainFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.main_fragment, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.main_fragment, container, false)
         return binding.root
     }
 
@@ -58,6 +61,11 @@ class MainFragment : BaseFragment() {
 
         viewModel.postList.observe(viewLifecycleOwner) { adapter.submitList(it) }
         viewModel.loading.observe(viewLifecycleOwner) { binding.refreshLayout.isRefreshing = it }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun openShowDetail(post: Post, binding: PostListItemBinding) {

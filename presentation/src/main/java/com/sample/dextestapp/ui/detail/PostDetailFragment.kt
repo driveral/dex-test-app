@@ -22,9 +22,12 @@ class PostDetailFragment : BaseFragment() {
     }
 
     private val args: PostDetailFragmentArgs by navArgs()
-
     private val viewModel: PostDetailViewModel by viewModels()
-    lateinit var binding: PostDetailFragmentBinding
+    private var _binding: PostDetailFragmentBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +40,8 @@ class PostDetailFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.post_detail_fragment, container, false)
+        _binding =
+            DataBindingUtil.inflate(inflater, R.layout.post_detail_fragment, container, false)
         return binding.root
     }
 
@@ -54,4 +58,8 @@ class PostDetailFragment : BaseFragment() {
         binding.image.loadImage(post.imageUrl)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
