@@ -1,7 +1,8 @@
 package com.sample.data
 
+import arrow.core.Either
 import com.sample.domain.Credentials
-import com.sample.domain.Result
+import com.sample.domain.ErrorEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -11,7 +12,7 @@ class CredentialsRepository @Inject constructor(private val credentialsDataSourc
         credentialsDataSource.saveCredentials(credentials)
     }
 
-    fun getCredentials(): Result<Credentials> = credentialsDataSource.getCredentials()
+    fun getCredentials(): Either<ErrorEntity, Credentials> = credentialsDataSource.getCredentials()
 
     fun deleteCredentials() {
         credentialsDataSource.deleteCredentials()

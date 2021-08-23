@@ -37,6 +37,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    implementation "io.arrow-kt:arrow-core:$arrow_version"
     api project(path: ':domain')
 
     testImplementation "junit:junit:$junit_version"

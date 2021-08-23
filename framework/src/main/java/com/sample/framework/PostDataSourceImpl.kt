@@ -1,9 +1,11 @@
 package com.sample.framework
 
+import arrow.core.Either
+import arrow.core.right
 import com.sample.data.PostDataSource
 import com.sample.domain.Credentials
+import com.sample.domain.ErrorEntity
 import com.sample.domain.Post
-import com.sample.domain.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -11,7 +13,7 @@ import javax.inject.Inject
 import kotlin.random.Random
 
 class PostDataSourceImpl @Inject constructor() : PostDataSource {
-    override suspend fun getLastestPosts(credentials: Credentials): Result<List<Post>> =
+    override suspend fun getLastestPosts(credentials: Credentials): Either<ErrorEntity, List<Post>> =
         withContext(Dispatchers.IO) {
             val list = mutableListOf<Post>()
 
@@ -47,6 +49,6 @@ class PostDataSourceImpl @Inject constructor() : PostDataSource {
             // Fake server delay
             delay(Random.Default.nextInt(from = 1, until = 5) * 1000L)
 
-            return@withContext Result.Success(list)
+            return@withContext list.right()
         }
 }

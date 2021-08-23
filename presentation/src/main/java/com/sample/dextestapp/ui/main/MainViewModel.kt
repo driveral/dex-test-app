@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import arrow.core.Either
 import com.sample.domain.Post
-import com.sample.domain.Result
 import com.sample.interactor.GetPostsInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -30,8 +30,8 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             _loading.value = true
             when (val result = getPostsInteractor.getPosts()) {
-                is Result.Success -> _postList.value = result.data
-                is Result.Failure -> TODO()
+                is Either.Left -> TODO()
+                is Either.Right -> _postList.value = result.value
             }
             _loading.value = false
         }

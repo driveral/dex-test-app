@@ -2,8 +2,11 @@ package com.sample.framework
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import arrow.core.Either
+import arrow.core.left
+import arrow.core.right
 import com.sample.domain.Credentials
-import com.sample.domain.Result
+import com.sample.domain.ErrorEntity
 import javax.inject.Inject
 
 const val USER_KEY = "USER_KEY"
@@ -19,15 +22,15 @@ class CredentialsDataSourceImpl @Inject constructor(private val sharedPreference
         }
     }
 
-    override fun getCredentials(): Result<Credentials> {
+    override fun getCredentials(): Either<ErrorEntity, Credentials> {
         val userId = sharedPreferences.getString(USER_KEY, null)
         val token = sharedPreferences.getString(TOKEN_KEY, null)
 
         if (userId != null && token != null) {
-            return Result.Success(Credentials(userId, token))
+            return Credentials(userId, token).right()
         }
 
-        return Result.Failure(com.sample.domain.ErrorEntity.NO_CREDENTIALS_AVAILABLE)
+        return ErrorEntity.NO_CREDENTIALS_AVAILABLE.left()
     }
 
     override fun deleteCredentials() {

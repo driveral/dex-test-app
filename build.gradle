@@ -24,6 +24,7 @@ buildscript {
         arch_version = "2.1.0"
         picasso_version = "2.71828"
         coil_version = "1.2.1"
+        arrow_version = "0.13.2"
 
         // Testing versions
         junit_version = "4.13.2"

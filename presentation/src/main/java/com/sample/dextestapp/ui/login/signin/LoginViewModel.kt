@@ -1,9 +1,9 @@
 package com.sample.dextestapp.ui.login.signin
 
 import androidx.lifecycle.*
+import arrow.core.Either
 import com.sample.dextestapp.util.SingleLiveEvent
 import com.sample.domain.ErrorEntity
-import com.sample.domain.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -49,8 +49,8 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             _loading.value = true
             when (val result = loginInteractor.login(user, pass)) {
-                is Result.Failure -> _loginErrorMessage.value = result.error
-                is Result.Success -> _loginSuccessFulEvent.call()
+                is Either.Left -> _loginErrorMessage.value = result.value
+                is Either.Right -> _loginSuccessFulEvent.call()
             }
             _loading.value = false
         }

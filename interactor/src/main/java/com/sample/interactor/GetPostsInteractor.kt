@@ -1,9 +1,11 @@
 package com.sample.interactor
 
+import arrow.core.Either
+import arrow.core.left
 import com.sample.data.CredentialsRepository
 import com.sample.data.PostRepository
+import com.sample.domain.ErrorEntity
 import com.sample.domain.Post
-import com.sample.domain.Result
 import javax.inject.Inject
 
 class GetPostsInteractor @Inject constructor(
@@ -11,10 +13,10 @@ class GetPostsInteractor @Inject constructor(
     private val postRepository: PostRepository
 ) {
 
-    suspend fun getPosts(): Result<List<Post>> {
+    suspend fun getPosts(): Either<ErrorEntity, List<Post>> {
         return when (val result = credentialsRepository.getCredentials()) {
-            is Result.Failure -> Result.Failure(result.error)
-            is Result.Success -> postRepository.getLastestPosts(result.data)
+            is Either.Left -> result.value.left()
+            is Either.Right -> postRepository.getLastestPosts(result.value)
         }
     }
 }

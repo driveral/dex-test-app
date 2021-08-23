@@ -1,10 +1,12 @@
 package com.sample.framework
 
 import androidx.room.*
+import arrow.core.Either
+import arrow.core.left
+import arrow.core.right
 import com.sample.data.UserDataSource
 import com.sample.domain.Credentials
 import com.sample.domain.ErrorEntity
-import com.sample.domain.Result
 import kotlinx.coroutines.delay
 import java.security.MessageDigest
 import javax.inject.Inject
@@ -12,24 +14,27 @@ import kotlin.random.Random
 
 class UserDataSourceImpl @Inject constructor(private val userDatabase: UserDatabase) :
     UserDataSource {
-    override suspend fun login(userName: String, password: String): Result<Credentials> {
+    override suspend fun login(
+        userName: String,
+        password: String
+    ): Either<ErrorEntity, Credentials> {
         // Fake server delay
         delay(Random.nextInt(from = 1, until = 5) * 1000L)
 
         if (userName == "admin" && password == "admin") {
-            return Result.Success(Credentials("admin", "token"))
+            return Credentials("admin", "token").right()
         }
 
         val userDao = userDatabase.userDao()
         val user = userDao.findUser(userName)
         return if (user != null) {
             if (password.sha512() == user.passwordHash) {
-                Result.Success(Credentials(user.userName, "token"))
+                Credentials(user.userName, "token").right()
             } else {
-                Result.Failure(ErrorEntity.WRONG_CREDENTIALS)
+                ErrorEntity.WRONG_CREDENTIALS.left()
             }
         } else {
-            Result.Failure(ErrorEntity.WRONG_CREDENTIALS)
+            ErrorEntity.WRONG_CREDENTIALS.left()
         }
     }
 
@@ -37,7 +42,7 @@ class UserDataSourceImpl @Inject constructor(private val userDatabase: UserDatab
         // Notify the server or something
     }
 
-    override suspend fun register(userName: String, password: String): Result<Unit> {
+    override suspend fun register(userName: String, password: String): Either<ErrorEntity, Unit> {
         val userDao = userDatabase.userDao()
         val storedUser = userDao.findUser(userName)
 
@@ -48,9 +53,9 @@ class UserDataSourceImpl @Inject constructor(private val userDatabase: UserDatab
         return if (storedUser == null) {
             val user = User(userName, password.sha512())
             userDao.insert(user)
-            Result.Success(Unit)
+            Unit.right()
         } else {
-            Result.Failure(ErrorEntity.USERNAME_IN_USE)
+            ErrorEntity.USERNAME_IN_USE.left()
         }
     }
 
