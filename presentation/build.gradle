@@ -54,6 +54,7 @@ dependencies {
     implementation "com.google.android.material:material:$material_version"
     implementation "com.google.dagger:hilt-android:$hilt_version"
     implementation "com.squareup.picasso:picasso:$picasso_version"
+    implementation "io.coil-kt:coil:$coil_version"
     implementation project(path: ":framework")
     implementation project(path: ':interactor')
     // debugImplementation because LeakCanary should only run in debug builds.
